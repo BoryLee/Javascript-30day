@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>day01_Javascript实现爵士鼓</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <div data-key='65' class="item">
+            <em>A</em>
+            <div class="sound">clap</div>
+        </div>
+        <div data-key='83' class="item">
+            <em>S</em>
+            <div class="sound">hihat</div>
+        </div>
+        <div data-key='68' class="item">
+            <em>D</em>
+            <div class="sound">kick</div>
+        </div>
+        <div data-key='70' class="item">
+            <em>F</em>
+            <div class="sound">openhat</div>
+        </div>
+        <div data-key='71' class="item">
+            <em>G</em>
+            <div class="sound">boom</div>
+        </div>
+        <div data-key='72' class="item">
+            <em>H</em>
+            <div class="sound">ride</div>
+        </div>
+        <div data-key='74' class="item">
+            <em>J</em>
+            <div class="sound">snare</div>
+        </div>
+        <div data-key='75' class="item">
+            <em>K</em>
+            <div class="sound">tom</div>
+        </div>
+        <div data-key='76' class="item">
+            <em>L</em>
+            <div class="sound">tink</div>
+        </div>
+        <audio data-key='65' src="source/clap.wav"></audio>
+        <audio data-key='83' src="source/hihat.wav"></audio>
+        <audio data-key='68' src="source/kick.wav"></audio>
+        <audio data-key='70' src="source/openhat.wav"></audio>
+        <audio data-key='71' src="source/boom.wav"></audio>
+        <audio data-key='72' src="source/ride.wav"></audio>
+        <audio data-key='74' src="source/snare.wav"></audio>
+        <audio data-key='75' src="source/tom.wav"></audio>
+        <audio data-key='76' src="source/tink.wav"></audio>
+    </div>
+    <script>
+        function removeTransition(e){
+            if(e.propertyName !== 'transform') return;
+            e.target.classList.remove('playing');
+        }
+        function playSound(e){
+            const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+            const item = document.querySelector(`div[data-key="${e.keyCode}"]`);
+            if(!audio) return;
+            item.classList.add('playing');
+            audio.currentTime = 0;
+            audio.play();
+        }
+        const items = Array.from(document.querySelectorAll('.item'));
+        items.forEach(item => item.addEventListener('transitionend',removeTransition));
+        window.addEventListener('keydown',playSound);
+    </script>
+</body>
+</html>
